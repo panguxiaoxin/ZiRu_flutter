@@ -2,7 +2,22 @@ import 'package:flutter/material.dart';
 
 import 'package:zirudemo/page/IndexPage.dart';
 
-void main() => runApp(MyApp());
+import 'clientengine/ClientEngine.dart';
+
+void main() {
+
+  init();
+
+  runApp(MyApp());
+}
+///APP启动前的初始化工作
+Future<void> init() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var client = ClientEngine();
+  await client.init();
+  
+  client.getSystemData();
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

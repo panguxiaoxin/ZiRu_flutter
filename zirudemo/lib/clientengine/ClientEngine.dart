@@ -25,7 +25,6 @@ class ClientEngine {
     return _clientEngine;
   }
 
-
   SpManager _spManager; //数据持久化存储
   ShareDataManager _shareDataManager; // 数据内存保存
   ///包名 版本号 APP名称
@@ -142,7 +141,7 @@ class ClientEngine {
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return ZiRuWebForm(
-          strOrginUrl, strUrl, strTitle, strData, nOpenMode, nAnimation, this);
+          strOrginUrl, strUrl, strTitle, strData, nOpenMode, nAnimation);
     }));
   }
 

@@ -16,7 +16,7 @@ Future<void> init() async {
   var client = ClientEngine();
   await client.init();
   
-  client.getSystemData();
+  print(client.getSystemData());
 }
 
 class MyApp extends StatelessWidget {

@@ -146,13 +146,6 @@ class ClientEngine {
   }
 
   ///getSystemData 获取平台和APP信息
-  /*
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    NSString *appLocalVersion = [version stringByReplacingOccurrencesOfString:@"." withString:@""];
-    NSString *system = [[UIDevice currentDevice] systemVersion];
-    NSArray *array = [NSArray arrayWithObjects:@"2",appLocalVersion,version,system, nil];
-    return  [array componentsJoinedByString:@","];
-  */
   getSystemData() {
     if (Platform.isIOS) {
       var array = ["2",_packageInfo.version.replaceAll(".", ""),_packageInfo.version,_iosDeviceInfo.systemVersion];

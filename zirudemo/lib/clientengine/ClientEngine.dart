@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
@@ -30,6 +31,9 @@ class ClientEngine {
   ///包名 版本号 APP名称
   PackageInfo _packageInfo;
 
+  IosDeviceInfo _iosDeviceInfo;
+  AndroidDeviceInfo _androidDeviceInfo;
+
   Future<bool> init() async {
     //初始化SP
     _spManager = new SpManager();
@@ -45,6 +49,13 @@ class ClientEngine {
     }
 
     _packageInfo = await PackageInfo.fromPlatform();
+
+    if (Platform.isIOS) {
+      _iosDeviceInfo = await DeviceInfoPlugin().iosInfo;
+    }else if(Platform.isAndroid){
+      _androidDeviceInfo = await DeviceInfoPlugin().androidInfo;
+    }
+    
 
     print("clientengine初始化完成");
     return true;
@@ -144,9 +155,11 @@ class ClientEngine {
     return  [array componentsJoinedByString:@","];
   */
   getSystemData() {
-    print(_packageInfo.version);
-    print(_packageInfo.buildNumber);
-    print(_packageInfo.appName);
-    print(_packageInfo.packageName);
+    if (Platform.isIOS) {
+      var array = ["2",_packageInfo.version.replaceAll(".", ""),_packageInfo.version,_iosDeviceInfo.systemVersion];
+      return array.join(',');
+    } else if(Platform.isAndroid){
+      return ["1",_packageInfo.version.replaceAll(".", ""),_packageInfo.version,_androidDeviceInfo.version];
+    }
   }
 }

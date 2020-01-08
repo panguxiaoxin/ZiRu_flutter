@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div style="height: 100px;width: 300px; font-size: 30px; background: #F3B120;">
+			测试
+		</div>
+		<div onclick="saveData();" style="height: 100px;width: 300px; font-size: 30px;background: #FC641C;">
+			saveData
+		</div>
+			<div onclick="testLoadData();" style="height: 100px;width: 300px; font-size: 30px;background: #F3B120;" id="load">
+			loadData
+		</div>
+			<div onclick="shareData();"style="height: 100px;width: 300px; font-size: 30px;background: #FC641C;">
+			shareData
+		</div>
+			<div onclick="test_shareData();" style="height: 100px;width: 300px; font-size: 30px;background: #F3B120;" id="share">
+			getShareData
+		</div>
+		
+	</body>
+	<script>
+		function test_shareData(){
+		  var data=	getShareData();
+		   document.getElementById("share").innerText="shareData="+data;
+		}
+		var saveData=function(){
+			var data={};
+			data["method"]="saveData";
+			var params={};
+			params["key"]="abc";
+			params["value"]="我是小明";
+			data["params"]=params;
+			clientEngine.postMessage(JSON.stringify(data))
+		}
+
+		function testLoadData(){
+         var data=test_loadData();
+			document.getElementById("load").innerText="loadData="+data;
+
+		}
+		async function test_loadData(){
+			 
+		  var data=	await loadData();
+		  return data;
+		 
+		}
+		
+		var load_resolve;
+		 function  loadData(){
+			var data={};
+			data["method"]="loadData";
+			var params={};
+			params["key"]="abc";
+			 params["callback"]="loadData_callback";
+			data["params"]=params;
+			clientEngine.postMessage(JSON.stringify(data))
+			 return  new Promise(function(resolve,reject){
+			 	load_resolve=resolve;
+			 	
+			 });
+			 
+		}
+		  function loadData_callback(resultData){
+			 
+		  	load_resolve(resultData);
+		  }
+		var shareData=function(){
+			var data={};
+			data["method"]="shareData";
+			var params={};
+			params["key"]="mn";
+			params["value"]="‘我是小红";
+			data["params"]=params;
+			clientEngine.postMessage(JSON.stringify(data))
+		}
+		var share_resolve;
+	  async 	function getShareData() {
+			var data={};
+			data["method"]="getShareData";
+			var params={};
+			params["key"]="mn";
+			 params["callback"]="share_callback";
+			 clientEngine.postMessage(JSON.stringify(data));
+			  
+			 return await new Promise(function(resolve,reject){
+			 	share_resolve=resolve;
+			 });
+		}
+	   	 function share_callback(resultData){
+		  	share_resolve(resultData);
+		  }
+
+
+
+
+
+
+	</script>
+</html>

@@ -16,6 +16,8 @@ Future<void> init() async {
   var client = ClientEngine();
   await client.init();
   
+  client.startSDK("callBackFuncName", "classPath", "methodName", "params");
+
   print(client.getSystemData());
 }
 

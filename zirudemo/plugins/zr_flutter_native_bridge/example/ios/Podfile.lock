@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - zr_flutter_native_bridge (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - zr_flutter_native_bridge (from `.symlinks/plugins/zr_flutter_native_bridge/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  zr_flutter_native_bridge:
+    :path: ".symlinks/plugins/zr_flutter_native_bridge/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  zr_flutter_native_bridge: 9c6408060d69761df8e461f898f63052602e8b5d
+
+PODFILE CHECKSUM: 3dbe063e9c90a5d7c9e4e76e70a821b9e2c1d271
+
+COCOAPODS: 1.8.4

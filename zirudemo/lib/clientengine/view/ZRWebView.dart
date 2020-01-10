@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:zirudemo/clientengine/ClientEngine.dart';
+import 'package:zirudemo/clientengine/interface/PageFinishListener.dart';
 
 import '../WebEngine.dart';
 
 class ZRWebView extends StatefulWidget {
   final String strUrl;
-  ZRWebView({Key key, this.strUrl}) : super(key: key);
+  PageFinishListener listener;
+  ZRWebView(this.strUrl);
+  WebView webView;
+  bool isinited = false;
 
-  @override
+  ZRState zrState;
   State<StatefulWidget> createState() {
-    return new ZRState();
+    zrState = new ZRState();
+    return zrState;
   }
 }
 
@@ -22,17 +27,32 @@ class ZRState extends State<ZRWebView> {
         name: 'clientEngine',
         onMessageReceived: (JavascriptMessage message) {
           String data = message.message;
-          WebEngine.handMessage(_controller, data);
+          WebEngine.handMessage(context, _controller, data);
         });
+  }
+
+  callbackJs(String javascriptString) {
+    _controller.evaluateJavascript(javascriptString);
   }
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return WebView(
       initialUrl: "file://" + widget.strUrl,
       javascriptMode: JavascriptMode.unrestricted,
       onWebViewCreated: (WebViewController webViewController) {
         _controller = webViewController;
+      },
+      navigationDelegate: (NavigationRequest request) {
+        print(' navigation to $request');
+        if (widget.isinited) {
+          return NavigationDecision.prevent;
+        } else {
+          widget.isinited = true;
+          print('allowing navigation to $request');
+          return NavigationDecision.navigate;
+        }
       },
       debuggingEnabled: true,
       javascriptChannels: <JavascriptChannel>[
@@ -43,7 +63,51 @@ class ZRState extends State<ZRWebView> {
       },
       onPageFinished: (String url) {
         print('Page finished loading: $url');
+        if (widget.listener != null) {
+          widget.listener.callBack(widget);
+          widget.listener = null;
+        }
       },
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   if (widget.webView == null) {
+  //     print("webView====2222");
+  //     widget.webView = WebView(
+  //       initialUrl: "file://" + widget.strUrl,
+  //       javascriptMode: JavascriptMode.unrestricted,
+  //       onWebViewCreated: (WebViewController webViewController) {
+  //         _controller = webViewController;
+  //       },
+  //       navigationDelegate: (NavigationRequest request) {
+  //         print(' navigation to $request');
+  //         if (widget.isinited) {
+  //           return NavigationDecision.prevent;
+  //         } else {
+  //           widget.isinited = true;
+  //           print('allowing navigation to $request');
+  //           return NavigationDecision.navigate;
+  //         }
+  //       },
+  //       debuggingEnabled: true,
+  //       javascriptChannels: <JavascriptChannel>[
+  //         _engineJavascriptChannel(context),
+  //       ].toSet(),
+  //       onPageStarted: (String url) {
+  //         print('Page started loading: $url');
+  //       },
+  //       onPageFinished: (String url) {
+  //         print('Page finished loading: $url');
+  //         if (widget.listener != null) {
+  //           widget.listener.callBack(widget);
+  //           widget.listener = null;
+  //         }
+  //       },
+  //     );
+  //   } else {}
+
+  //   return widget.webView;
+  // }
 }

@@ -59,7 +59,6 @@ class _WebViewExampleState extends State<WebViewExample> {
           // ignore: prefer_collection_literals
           javascriptChannels: <JavascriptChannel>[
             _toasterJavascriptChannel(context),
-         
           ].toSet(),
           navigationDelegate: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
@@ -75,7 +74,6 @@ class _WebViewExampleState extends State<WebViewExample> {
           onPageFinished: (String url) {
             print('Page finished loading: $url');
           },
-  
         );
       }),
       floatingActionButton: favoriteButton(),
@@ -92,7 +90,6 @@ class _WebViewExampleState extends State<WebViewExample> {
         });
   }
 
- 
   Widget favoriteButton() {
     return FutureBuilder<WebViewController>(
         future: _controller.future,

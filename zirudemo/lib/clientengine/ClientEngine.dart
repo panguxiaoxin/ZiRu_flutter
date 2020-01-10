@@ -11,6 +11,7 @@ import 'package:zirudemo/manager/FormViewManager.dart';
 import 'package:zirudemo/manager/ShareDataManager.dart';
 import 'package:zirudemo/manager/SpManager.dart';
 import 'package:package_info/package_info.dart';
+import 'package:zr_flutter_native_bridge/zr_flutter_native_bridge.dart';
 
 class ClientEngine {
   ///单例
@@ -57,6 +58,9 @@ class ClientEngine {
     } else if (Platform.isAndroid) {
       _androidDeviceInfo = await DeviceInfoPlugin().androidInfo;
     }
+
+    ///初始化flutter与原生插件之间的桥梁
+    ZrFlutterNativeBridge();
 
     print("clientengine初始化完成");
     return true;
@@ -126,6 +130,36 @@ class ClientEngine {
 
   back(BuildContext context, int nAnimation) {
     formViewManager.back(context, nAnimation);
+  }
+
+  ///异步startsdk
+  startSDK(String callBackFuncName, String classPath, String methodName,
+      String params) {
+    print("startSDK : $callBackFuncName, $classPath, $methodName, $params");
+
+    String urlMapping = this.loadData("urlmapping");
+
+    // assert(urlMapping != null);
+
+    String sdkName = classPath.replaceAll("class://", "");
+
+    ZrFlutterNativeBridge.startSDK(sdkName, methodName, params).then((result) {
+      print("异步获得的数据 = $result");
+    });
+  }
+
+  ///同步startsynsdk
+  Future<String> startSynSDK(String callBackFuncName, String classPath,
+      String methodName, String params) async {
+    print("startSynSDK : $callBackFuncName, $classPath, $methodName, $params");
+
+    String urlMapping = this.loadData("urlmapping");
+
+    // assert(urlMapping != null);
+
+    String sdkName = classPath.replaceAll("class://", "");
+
+    return "";
   }
 
   ///getSystemData 获取平台和APP信息

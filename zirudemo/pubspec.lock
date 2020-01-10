@@ -255,9 +255,9 @@ packages:
   webview_flutter:
     dependency: "direct main"
     description:
-      name: webview_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "plugins/webview_flutter"
+      relative: true
+    source: path
     version: "0.3.19+3"
   xml:
     dependency: transitive
@@ -266,6 +266,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.5.0"
+  zr_flutter_native_bridge:
+    dependency: "direct main"
+    description:
+      path: "plugins/zr_flutter_native_bridge"
+      relative: true
+    source: path
+    version: "0.0.1"
 sdks:
   dart: ">=2.4.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5 <2.0.0"

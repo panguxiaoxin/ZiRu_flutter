@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
 import 'package:zirudemo/page/IndexPage.dart';
+import 'package:zirudemo/page/ListPage.dart';
 
 import 'clientengine/ClientEngine.dart';
 
 void main() {
-
   init();
 
   runApp(MyApp());
 }
+
 ///APP启动前的初始化工作
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
   var client = ClientEngine();
   await client.init();
-  
+
   print(client.getSystemData());
 }
 
@@ -113,10 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               child: Text("webView"),
-              onPressed: ()=>{
-                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return IndexPage();
-                  }))
+              onPressed: () => {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ListPage();
+                }))
               },
             ),
             Text(

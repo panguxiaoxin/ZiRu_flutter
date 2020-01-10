@@ -20,9 +20,21 @@
 			<div onclick="test_shareData();" style="height: 100px;width: 300px; font-size: 30px;background: #F3B120;" id="share">
 			getShareData
 		</div>
-		
+	</div>
+	<div onclick="openform();" style="height: 100px;width: 300px; font-size: 30px;background: #F3B120;" id="share">
+	openform
+</div>
 	</body>
 	<script>
+
+		function openform(){
+			var data={};
+			data["method"]="openform";
+			var params={};
+			params["url"]="test.html";
+			data["params"]=params;
+			clientEngine.postMessage(JSON.stringify(data))
+		}
 		function test_shareData(){
 		  var data=	getShareData();
 		   document.getElementById("share").innerText="shareData="+data;

@@ -6,6 +6,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:zirudemo/ZRConstants.dart';
 import 'package:zirudemo/clientengine/form/ZiRuWebForm.dart';
+import 'package:zirudemo/manager/FormListManager.dart';
+import 'package:zirudemo/manager/FormViewManager.dart';
 import 'package:zirudemo/manager/ShareDataManager.dart';
 import 'package:zirudemo/manager/SpManager.dart';
 import 'package:package_info/package_info.dart';
@@ -32,6 +34,7 @@ class ClientEngine {
 
   IosDeviceInfo _iosDeviceInfo;
   AndroidDeviceInfo _androidDeviceInfo;
+  FormViewManager formViewManager = FormViewManager();
 
   Future<bool> init() async {
     //初始化SP
@@ -51,10 +54,9 @@ class ClientEngine {
 
     if (Platform.isIOS) {
       _iosDeviceInfo = await DeviceInfoPlugin().iosInfo;
-    }else if(Platform.isAndroid){
+    } else if (Platform.isAndroid) {
       _androidDeviceInfo = await DeviceInfoPlugin().androidInfo;
     }
-    
 
     print("clientengine初始化完成");
     return true;
@@ -84,7 +86,7 @@ class ClientEngine {
     _shareDataManager.setSharedData(strKey, strValue);
   }
 
-  String getSharedData(String strKey) {
+  getSharedData(String strKey) {
     return _shareDataManager.getSharedData(strKey);
   }
 
@@ -92,33 +94,14 @@ class ClientEngine {
     _shareDataManager.deleteSharedData(strKey);
   }
 
-/***
- * 持久化数据处理===========================================================================
- */
-  /**
-     * 保存
-     *
-     * @param strKey
-     * @param strData
-     */
   saveData(String strKey, String strData) {
     _spManager.saveString(strKey, strData);
   }
 
-  /**
-     * 获取
-     *
-     * @param strKey
-     */
   loadData(String strKey) {
     return _spManager.getString(strKey);
   }
 
-  /**
-     * 删除
-     *
-     * @param strKey
-     */
   deleteData(String strKey) {
     _spManager.deleteString(strKey);
   }
@@ -137,21 +120,31 @@ class ClientEngine {
   openform(BuildContext context, String url, String strTitle, String strData,
       int nOpenMode, int nAnimation) {
     String strOrginUrl = url;
-    String strUrl = ZRConstants.zipPath + url;
+    formViewManager.openform(
+        context, strOrginUrl, strTitle, strData, nOpenMode, nAnimation);
+  }
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ZiRuWebForm(
-          strOrginUrl, strUrl, strTitle, strData, nOpenMode, nAnimation);
-    }));
+  back(BuildContext context, int nAnimation) {
+    formViewManager.back(context, nAnimation);
   }
 
   ///getSystemData 获取平台和APP信息
   getSystemData() {
     if (Platform.isIOS) {
-      var array = ["2",_packageInfo.version.replaceAll(".", ""),_packageInfo.version,_iosDeviceInfo.systemVersion];
+      var array = [
+        "2",
+        _packageInfo.version.replaceAll(".", ""),
+        _packageInfo.version,
+        _iosDeviceInfo.systemVersion
+      ];
       return array.join(',');
-    } else if(Platform.isAndroid){
-      return ["1",_packageInfo.version.replaceAll(".", ""),_packageInfo.version,_androidDeviceInfo.version];
+    } else if (Platform.isAndroid) {
+      return [
+        "1",
+        _packageInfo.version.replaceAll(".", ""),
+        _packageInfo.version,
+        _androidDeviceInfo.version
+      ];
     }
   }
 }

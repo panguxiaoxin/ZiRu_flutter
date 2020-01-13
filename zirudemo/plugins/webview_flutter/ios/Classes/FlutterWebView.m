@@ -341,7 +341,14 @@
   }
   NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:nsUrl];
   [request setAllHTTPHeaderFields:headers];
-  [_webView loadRequest:request];
+  // [_webView loadRequest:request];
+
+  if([url hasPrefix:@"http"]) {
+      [_webView loadRequest:request];
+  }else{
+      [_webView loadFileURL:nsUrl allowingReadAccessToURL:[nsUrl URLByDeletingLastPathComponent]];
+  }
+
   return true;
 }
 

@@ -7,7 +7,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:zirudemo/clientengine/view/webview/webview_flutter.dart';
 
 void main() => runApp(MaterialApp(home: WebViewExample()));
 

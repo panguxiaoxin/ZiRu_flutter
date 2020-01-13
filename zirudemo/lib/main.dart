@@ -16,10 +16,6 @@ Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
   var client = ClientEngine();
   await client.init();
-
-  client.startSDK("callBackFuncName", "classPath", "methodName", "params");
-
-  print(client.getSystemData());
 }
 
 class MyApp extends StatelessWidget {

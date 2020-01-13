@@ -32,8 +32,8 @@ dependencies:
   #获取设备信息
   device_info: ^0.4.1+4
 
-  webview_flutter:
-    path: plugins/webview_flutter
+  # webview_flutter:
+  #   path: plugins/webview_flutter
 
   zr_flutter_native_bridge:
     path: plugins/zr_flutter_native_bridge

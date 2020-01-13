@@ -5,10 +5,9 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:webview_flutter/src/webview_method_zrhelper.dart';
+import 'package:zirudemo/clientengine/view/webview/src/webview_method_zrhelper.dart';
 
 import '../platform_interface.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// A [WebViewPlatformController] that uses a method channel to control the webview.
 class MethodChannelWebViewPlatform implements WebViewPlatformController {

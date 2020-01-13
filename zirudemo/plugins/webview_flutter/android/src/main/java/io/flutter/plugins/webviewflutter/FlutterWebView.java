@@ -9,9 +9,18 @@ import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.webkit.JsPromptResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebStorage;
+import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -19,6 +28,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.platform.PlatformView;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +74,13 @@ public class FlutterWebView implements PlatformView, MethodCallHandler {
       String userAgent = (String) params.get("userAgent");
       updateUserAgent(userAgent);
     }
+    webView.setWebChromeClient(new WebChromeClient(){
+      @Override
+      public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, final JsPromptResult result) {
+        return ZrMethodHelper.handMethodCall(methodChannel,message,defaultValue,result);
+
+      }
+    });
     if (params.containsKey("initialUrl")) {
       String url = (String) params.get("initialUrl");
       webView.loadUrl(url);

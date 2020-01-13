@@ -4,9 +4,12 @@
 
 package io.flutter.plugins.webviewflutter;
 
+import android.app.VoiceInteractor;
 import android.os.Handler;
 import android.os.Looper;
 import android.webkit.JavascriptInterface;
+import android.webkit.JsPromptResult;
+
 import io.flutter.plugin.common.MethodChannel;
 import java.util.HashMap;
 
@@ -52,7 +55,8 @@ class JavaScriptChannel {
     if (platformThreadHandler.getLooper() == Looper.myLooper()) {
       postMessageRunnable.run();
     } else {
-      platformThreadHandler.post(postMessageRunnable);
+       platformThreadHandler.post(postMessageRunnable);
     }
   }
+
 }

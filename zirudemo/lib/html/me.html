@@ -68,12 +68,11 @@
 
 	function saveData11() {
 		var b = saveData('userid', "55555");
-		console.log(b ? "存储成功" : "存储失败");
 	}
 
 	function loadData11() {
 		var value = loadData('userid');
-		console.log("取出来的值为：" + value);
+		document.getElementById("load").innerText = "loadData=" + value;
 	}
 
 
@@ -81,6 +80,19 @@
 	}
 
 	function loadShareData11() {
+	}
+	var loadData = function (strKey) {
+		var params = {};
+		params['strKey'] = strKey;
+		var resultjson = prompt(JSON.stringify(['zrJsEngine', 'loadData', JSON.stringify(params)]));
+		return resultjson;
+	}
+	saveData = function (strKey, strValue) {
+		var params = {};
+		params['strKey'] = strKey;
+		params['strValue'] = strValue;
+		var resultjson = prompt(JSON.stringify(['zrJsEngine', 'saveData', JSON.stringify(params)]));
+		return resultjson;
 	}
 
 

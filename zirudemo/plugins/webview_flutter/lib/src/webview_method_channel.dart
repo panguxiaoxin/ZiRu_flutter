@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:webview_flutter/src/webview_method_zrhelper.dart';
 
 import '../platform_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,24 +29,8 @@ class MethodChannelWebViewPlatform implements WebViewPlatformController {
 
   Future<String> _onMethodCall(MethodCall call) async {
     switch (call.method) {
-
-
-
-      case 'saveData':
-        final String channel = call.arguments['strKey'];
-        final String message = call.arguments['strValue'];
-        var share = await SharedPreferences.getInstance();
-        Future<bool> b = share.setString(channel, message);
-        bool bbb = await b;
-        return bbb ? "1" : "0";
-      case 'loadData':
-        final String channel = call.arguments['strKey'];
-        var share = await SharedPreferences.getInstance();
-        return share.getString(channel);
-
-
-
-
+      case 'zrJsEngine':
+        return await WebviewMethodZrhelper.handMethodCall(call);
       case 'javascriptChannelMessage':
         final String channel = call.arguments['channel'];
         final String message = call.arguments['message'];

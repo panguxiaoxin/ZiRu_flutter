@@ -35,6 +35,8 @@ class FlutterWebViewClient {
     if (!hasNavigationDelegate) {
       return false;
     }
+
+
     notifyOnNavigationRequest(
         request.getUrl().toString(), request.getRequestHeaders(), view, request.isForMainFrame());
     // We must make a synchronous decision here whether to allow the navigation or not,
@@ -201,4 +203,6 @@ class FlutterWebViewClient {
       }
     }
   }
+
+
 }

@@ -341,14 +341,15 @@
   }
   NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:nsUrl];
   [request setAllHTTPHeaderFields:headers];
-  // [_webView loadRequest:request];
-
-  if([url hasPrefix:@"http"]) {
-      [_webView loadRequest:request];
-  }else{
-      [_webView loadFileURL:nsUrl allowingReadAccessToURL:[nsUrl URLByDeletingLastPathComponent]];
-  }
-
+  [_webView loadRequest:request];
+    
+    
+    if([url hasPrefix:@"http"]) {
+        [_webView loadRequest:request];
+    }else{
+        [_webView loadFileURL:nsUrl allowingReadAccessToURL:[nsUrl URLByDeletingLastPathComponent]];
+    }
+    
   return true;
 }
 
@@ -367,17 +368,6 @@
                             forMainFrameOnly:NO];
     [userContentController addUserScript:wrapperScript];
   }
-    
-   
-    
-  NSString *source=[[NSString alloc] initWithFormat:@"saveData=function(strKey, strValue){var resultjson = prompt(JSON.stringify(['saveData',strKey, strValue]));return resultjson;}"];
-  WKUserScript *script=[[WKUserScript alloc] initWithSource:source injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
-  [userContentController addUserScript:script];
-    
-    source=[[NSString alloc] initWithFormat:@"loadData=function(strKey){var resultjson = prompt(JSON.stringify(['loadData',strKey]));return resultjson;}"];
-    script=[[WKUserScript alloc] initWithSource:source injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
-    [userContentController addUserScript:script];
-    
 }
 
 - (void)updateUserAgent:(NSString*)userAgent {

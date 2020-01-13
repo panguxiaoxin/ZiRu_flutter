@@ -18,6 +18,11 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		D5A8EDAAA1040EF29EFF008B /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C1D859BD5C9626EB4E6BC83 /* Pods_Runner.framework */; };
+		D83D4F0023BD7B4A006CCDF9 /* FLTWKNavigationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D83D4EF923BD7B4A006CCDF9 /* FLTWKNavigationDelegate.m */; };
+		D83D4F0123BD7B4A006CCDF9 /* JavaScriptChannelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = D83D4EFB23BD7B4A006CCDF9 /* JavaScriptChannelHandler.m */; };
+		D83D4F0223BD7B4A006CCDF9 /* FLTWebViewFlutterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = D83D4EFC23BD7B4A006CCDF9 /* FLTWebViewFlutterPlugin.m */; };
+		D83D4F0323BD7B4A006CCDF9 /* FLTCookieManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D83D4EFD23BD7B4A006CCDF9 /* FLTCookieManager.m */; };
+		D83D4F0423BD7B4A006CCDF9 /* FlutterWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = D83D4EFF23BD7B4A006CCDF9 /* FlutterWebView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +60,16 @@
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7C85C9AEB75A3C7FC0F2B3E /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		D83D4EF623BD7B4A006CCDF9 /* FLTWebViewFlutterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTWebViewFlutterPlugin.h; sourceTree = "<group>"; };
+		D83D4EF723BD7B4A006CCDF9 /* JavaScriptChannelHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JavaScriptChannelHandler.h; sourceTree = "<group>"; };
+		D83D4EF823BD7B4A006CCDF9 /* FlutterWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlutterWebView.h; sourceTree = "<group>"; };
+		D83D4EF923BD7B4A006CCDF9 /* FLTWKNavigationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTWKNavigationDelegate.m; sourceTree = "<group>"; };
+		D83D4EFA23BD7B4A006CCDF9 /* FLTCookieManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTCookieManager.h; sourceTree = "<group>"; };
+		D83D4EFB23BD7B4A006CCDF9 /* JavaScriptChannelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JavaScriptChannelHandler.m; sourceTree = "<group>"; };
+		D83D4EFC23BD7B4A006CCDF9 /* FLTWebViewFlutterPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTWebViewFlutterPlugin.m; sourceTree = "<group>"; };
+		D83D4EFD23BD7B4A006CCDF9 /* FLTCookieManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTCookieManager.m; sourceTree = "<group>"; };
+		D83D4EFE23BD7B4A006CCDF9 /* FLTWKNavigationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTWKNavigationDelegate.h; sourceTree = "<group>"; };
+		D83D4EFF23BD7B4A006CCDF9 /* FlutterWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlutterWebView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +148,7 @@
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
+				D83D4EF523BD7B4A006CCDF9 /* Classes */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -142,6 +158,23 @@
 			children = (
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D83D4EF523BD7B4A006CCDF9 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D83D4EFA23BD7B4A006CCDF9 /* FLTCookieManager.h */,
+				D83D4EFD23BD7B4A006CCDF9 /* FLTCookieManager.m */,
+				D83D4EF623BD7B4A006CCDF9 /* FLTWebViewFlutterPlugin.h */,
+				D83D4EFC23BD7B4A006CCDF9 /* FLTWebViewFlutterPlugin.m */,
+				D83D4EFE23BD7B4A006CCDF9 /* FLTWKNavigationDelegate.h */,
+				D83D4EF923BD7B4A006CCDF9 /* FLTWKNavigationDelegate.m */,
+				D83D4EF823BD7B4A006CCDF9 /* FlutterWebView.h */,
+				D83D4EFF23BD7B4A006CCDF9 /* FlutterWebView.m */,
+				D83D4EF723BD7B4A006CCDF9 /* JavaScriptChannelHandler.h */,
+				D83D4EFB23BD7B4A006CCDF9 /* JavaScriptChannelHandler.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,8 +323,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D83D4F0323BD7B4A006CCDF9 /* FLTCookieManager.m in Sources */,
+				D83D4F0223BD7B4A006CCDF9 /* FLTWebViewFlutterPlugin.m in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
+				D83D4F0023BD7B4A006CCDF9 /* FLTWKNavigationDelegate.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				D83D4F0123BD7B4A006CCDF9 /* JavaScriptChannelHandler.m in Sources */,
+				D83D4F0423BD7B4A006CCDF9 /* FlutterWebView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

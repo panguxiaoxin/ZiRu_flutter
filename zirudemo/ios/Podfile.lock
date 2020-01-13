@@ -14,8 +14,6 @@ PODS:
     - Flutter
   - shared_preferences_web (0.0.1):
     - Flutter
-  - webview_flutter (0.0.1):
-    - Flutter
   - zr_flutter_native_bridge (0.0.1):
     - Flutter
 
@@ -28,7 +26,6 @@ DEPENDENCIES:
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - shared_preferences_macos (from `.symlinks/plugins/shared_preferences_macos/ios`)
   - shared_preferences_web (from `.symlinks/plugins/shared_preferences_web/ios`)
-  - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
   - zr_flutter_native_bridge (from `.symlinks/plugins/zr_flutter_native_bridge/ios`)
 
 EXTERNAL SOURCES:
@@ -48,8 +45,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_macos/ios"
   shared_preferences_web:
     :path: ".symlinks/plugins/shared_preferences_web/ios"
-  webview_flutter:
-    :path: ".symlinks/plugins/webview_flutter/ios"
   zr_flutter_native_bridge:
     :path: ".symlinks/plugins/zr_flutter_native_bridge/ios"
 
@@ -62,7 +57,6 @@ SPEC CHECKSUMS:
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
   shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
-  webview_flutter: bec7599de6bfbe8008a739aa3ebd7b364ea9d0cd
   zr_flutter_native_bridge: 9c6408060d69761df8e461f898f63052602e8b5d
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83

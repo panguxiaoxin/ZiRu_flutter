@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
@@ -8,6 +9,7 @@ import 'package:zirudemo/ZRConstants.dart';
 import 'package:zirudemo/clientengine/form/ZiRuWebForm.dart';
 import 'package:zirudemo/manager/FormListManager.dart';
 import 'package:zirudemo/manager/FormViewManager.dart';
+import 'package:zirudemo/manager/NetworkManager.dart';
 import 'package:zirudemo/manager/ShareDataManager.dart';
 import 'package:zirudemo/manager/SpManager.dart';
 import 'package:package_info/package_info.dart';
@@ -181,4 +183,42 @@ class ClientEngine {
       ];
     }
   }
+
+
+
+
+
+
+
+  ///网络相关
+  
+  /*
+  @param strCallbackFunctionName  js回调函数
+  @param strRequest   cdo请求
+  @param strAttachData    参数
+  @param strUnCancel  可选参数   默认是0 传递1为不可取消
+  */
+  raiseTrans(String strCallbackFunctionName, 
+             String strRequest, 
+             String strAttachData, 
+             String strUnCancel){
+    
+    final intUnCancel = strUnCancel != null ? int.parse(strUnCancel): 0;
+
+  }
+
+  Future<String> raiseHttpGet(String strURL) async{
+    
+    return NetworkManager().requestData(strURL, "1", null, null);
+    
+  }
+
+  Future<String> raiseHttpPost(String strURL,
+                               String strContentType,
+                               String strData) async{
+    var dataObj = jsonDecode(strData);
+    return NetworkManager().requestData(strURL, "2", dataObj,strContentType);
+  }
+
+
 }

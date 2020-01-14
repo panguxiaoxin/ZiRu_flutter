@@ -72,11 +72,18 @@
     _webView = [[WKWebView alloc] initWithFrame:frame configuration:configuration];
     _navigationDelegate = [[FLTWKNavigationDelegate alloc] initWithChannel:_channel];
     _webView.navigationDelegate = _navigationDelegate;
-      _webView.UIDelegate = _navigationDelegate;
+    _webView.UIDelegate = _navigationDelegate;
     __weak __typeof__(self) weakSelf = self;
     [_channel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
       [weakSelf onMethodCall:call result:result];
     }];
+
+    if (@available(iOS 11.0, *)) {
+      _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+      if (@available(iOS 13.0, *)) {
+        _webView.scrollView.automaticallyAdjustsScrollIndicatorInsets = NO;
+      }
+    }
 
     [self applySettings:settings];
     // TODO(amirh): return an error if apply settings failed once it's possible to do so.
@@ -341,14 +348,12 @@
   }
   NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:nsUrl];
   [request setAllHTTPHeaderFields:headers];
-  [_webView loadRequest:request];
-    
-    
-    if([url hasPrefix:@"http"]) {
-        [_webView loadRequest:request];
-    }else{
-        [_webView loadFileURL:nsUrl allowingReadAccessToURL:[nsUrl URLByDeletingLastPathComponent]];
-    }
+      
+  if([url hasPrefix:@"http"]) {
+      [_webView loadRequest:request];
+  }else{
+      [_webView loadFileURL:nsUrl allowingReadAccessToURL:[nsUrl URLByDeletingLastPathComponent]];
+  }
     
   return true;
 }

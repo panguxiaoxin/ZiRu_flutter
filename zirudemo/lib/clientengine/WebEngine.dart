@@ -28,8 +28,8 @@ class WebEngine {
       String jsdata = callback + "(" + result + ");";
       controller.evaluateJavascript(jsdata);
     } else if (method == "openform") {
-      var url = ZRConstants.zipPath + params["url"];
-      clientEngine.openform(context, params["url"], url, "", 1, 1);
+      clientEngine.openform(context, params["url"], params["strTitle"],
+          params["strData"], params["nOpenMode"], params["nAnimation"]);
     } else if (method == "back") {
       clientEngine.back(context, params["nAnimation"]);
     }

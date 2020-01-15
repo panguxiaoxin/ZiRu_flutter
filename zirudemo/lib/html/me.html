@@ -36,6 +36,10 @@
 		data["method"] = "openform";
 		var params = {};
 		params["url"] = "test.html";
+		params["nAnimation"] = 1;
+		params["strTitle"] = "abc";
+		params["nOpenMode"] = 0;
+		params["strData"] = "";
 		data["params"] = params;
 		clientEngine.postMessage(JSON.stringify(data))
 	}

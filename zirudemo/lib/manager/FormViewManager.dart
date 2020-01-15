@@ -1,71 +1,73 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zirudemo/clientengine/form/ZiRuWebForm.dart';
-import 'package:zirudemo/clientengine/interface/PageFinishListener.dart';
-import 'package:zirudemo/clientengine/traslation/CustomRouteSlide.dart';
-import 'package:zirudemo/clientengine/view/ZRWebView.dart';
-import 'package:zirudemo/manager/FormListManager.dart';
 
 import '../ZRConstants.dart';
 
-class FormViewManager implements PageFinishListener {
-  BuildContext mcontext;
-  ZiRuWebForm pre;
+class FormViewManager {
   openform(BuildContext context, String strOrginUrl, String strTitle,
       String strData, int nOpenMode, int nAnimation) {
-    mcontext = context;
-    String strUrl = ZRConstants.zipPath + strOrginUrl;
-    if (FormListManager.getInstance().size() == 0) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return ZiRuWebForm(
-            strOrginUrl, strUrl, strTitle, strData, nOpenMode, nAnimation);
-      }));
-      // Navigator.push(
-      //     context,
-      //     CustomRouteSlide(ZiRuWebForm(
-      //         strOrginUrl, strUrl, strTitle, strData, nOpenMode, nAnimation)));
+    if (strOrginUrl.startsWith("form")) {
     } else {
-      pre = ZiRuWebForm(
+      String strUrl = ZRConstants.zipPath + strOrginUrl;
+      ZiRuWebForm form = ZiRuWebForm(
           strOrginUrl, strUrl, strTitle, strData, nOpenMode, nAnimation);
-      ZRFormState currentFormState =
-          FormListManager.getInstance().getCurrentForm();
-      ZRWebView zrWebView = new ZRWebView(strUrl);
-      zrWebView.listener = this;
-      currentFormState.ziRuWebForm.preInitWebView = zrWebView;
-      currentFormState.zrState.initPreWebView(true, null);
+      Route route = null;
+      if (nOpenMode != 3) {
+        route = handAminatin(form, nAnimation);
+      }
+
+      handMode(strUrl, context, nOpenMode, route);
     }
   }
 
-  @override
-  void callBack(ZRWebView zrWebView) {
-    print("finish===CallBack=====");
-    ZRFormState currentFormState =
-        FormListManager.getInstance().getCurrentForm();
-    currentFormState.zrState.initPreWebView(false, this);
+  handMode(String url, BuildContext context, int nOpenMode, Route route) {
+    if (nOpenMode == 0) {
+      Navigator.push(context, route);
+    } else if (nOpenMode == 1) {
+      Navigator.pushReplacement(context, route);
+    } else if (nOpenMode == 2) {
+      Navigator.pushAndRemoveUntil(
+          context, route, (currentroute) => currentroute == null);
+    } else if (nOpenMode == 3) {
+      Navigator.popUntil(context, (currentroute) {
+        Map data = Map.from(currentroute.settings.arguments);
+        String currentUrl = data["form"];
+        return currentUrl == url;
+      });
+    }
   }
 
-  @override
-  void buildCallBack(ZRWebView zrWebView) {
-    print("buildCallBack=====");
-    pre.currentWebView = zrWebView;
-    // Navigator.push(mcontext, MaterialPageRoute(builder: (context) {
-    //   return pre;
-    // }));
-    Navigator.push(mcontext, PageRouteBuilder(pageBuilder:
-        (BuildContext context, Animation animation,
+  Route handAminatin(ZiRuWebForm childForm, int nAnimation) {
+    return PageRouteBuilder(
+        pageBuilder: (BuildContext context, Animation animation,
             Animation secondaryAnimation) {
-      return SlideTransition(
-          position: Tween<Offset>(begin: Offset(1, 0), end: Offset.zero)
-              .animate(animation),
-          child: pre);
-    }));
+          double beginX = 0;
+          double beginY = 0;
+          double endX = 0;
+          double endY = 0;
+          if (nAnimation == 1) {
+            beginX = 1;
+          } else if (nAnimation == 2) {
+            endX = 1;
+          } else if (nAnimation == 3) {
+            beginY = 1;
+          } else if (nAnimation == 4) {
+            endY = 1;
+          }
+          return SlideTransition(
+            position: Tween<Offset>(
+                    begin: Offset(beginX, beginY), end: Offset(endX, endY))
+                .animate(animation),
+            child: childForm,
+          );
+        },
+        settings: RouteSettings(arguments: {"form", childForm.strUrl}));
   }
 
   back(BuildContext context, int nAnimation) {
-    BuildContext context =
-        FormListManager.getInstance().getCurrentForm().zrState.mcontext;
-    FormListManager.getInstance()
-        .remove(FormListManager.getInstance().getCurrentForm());
-    Navigator.pop(context);
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
   }
 }

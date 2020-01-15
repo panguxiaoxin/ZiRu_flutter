@@ -39,8 +39,6 @@ class ClientEngine {
   AndroidDeviceInfo _androidDeviceInfo;
   FormViewManager formViewManager = FormViewManager();
 
-  List<Map<String, Widget>> viewControllers = [];
-
   Future<bool> init() async {
     //初始化SP
     _spManager = new SpManager();

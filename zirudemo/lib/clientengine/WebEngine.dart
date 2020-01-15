@@ -12,53 +12,46 @@ class WebEngine {
     ClientEngine clientEngine = ClientEngine();
     var map = jsonDecode(data);
     String method = map["method"];
+
     Map<String, dynamic> params = map["params"];
 
-    
     if (method == "openform") {
-      var url = ZRConstants.zipPath + params["url"];
-      clientEngine.openform(context, params["url"], url, "", 1, 1);
+      clientEngine.openform(context, params["url"], params["strTitle"],
+          params["strData"], params["nOpenMode"], params["nAnimation"]);
     } else if (method == "back") {
       clientEngine.back(context, params["nAnimation"]);
-    }else if (method == "raiseTrans") {
-
+    } else if (method == "raiseTrans") {
       // clientEngine.raiseHttpGet(params["strUrl"]).then((result){
       //   controller.evaluateJavascript(javascriptString)
       // });
 
-    }else if (method == "raiseHttpGet") {
-      
+    } else if (method == "raiseHttpGet") {
       final strCallbackFunction = params['strCallbackFunction'];
       final strUrl = params['strUrl'];
       final strAttachData = params['strAttachData'];
 
-      clientEngine.raiseHttpGet(strUrl).then((result){
-        
-        var resultString = "'$strCallbackFunction','$strUrl','200','$result','$strAttachData'";
+      clientEngine.raiseHttpGet(strUrl).then((result) {
+        var resultString =
+            "'$strCallbackFunction','$strUrl','200','$result','$strAttachData'";
         try {
           controller.evaluateJavascript("onHttpResult($resultString)");
-        } catch (e) {
-
-        }
-        
+        } catch (e) {}
       });
-    }else if (method == "raiseHttpPost") {
-
+    } else if (method == "raiseHttpPost") {
       final strCallbackFunction = params['strCallbackFunction'];
       final strUrl = params['strUrl'];
       final strContentType = params['strContentType'];
       final strData = params['strData'];
       final strAttachData = params['strAttachData'];
 
-      clientEngine.raiseHttpPost(strUrl, strContentType, strData).then((result){
-
-        var resultString = "'$strCallbackFunction','$strUrl','200','$result','$strAttachData'";
+      clientEngine
+          .raiseHttpPost(strUrl, strContentType, strData)
+          .then((result) {
+        var resultString =
+            "'$strCallbackFunction','$strUrl','200','$result','$strAttachData'";
         try {
           controller.evaluateJavascript("onHttpResult($resultString)");
-        } catch (e) {
-          
-        }
-
+        } catch (e) {}
       });
     }
   }

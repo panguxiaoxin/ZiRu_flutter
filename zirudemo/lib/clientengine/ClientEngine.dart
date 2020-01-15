@@ -90,28 +90,28 @@ class ClientEngine {
   }
 //////////////////////////////////////////////////////////////////
 
-  setSharedData(String strKey, String strValue) {
-    _shareDataManager.setSharedData(strKey, strValue);
+  bool setSharedData(String strKey, String strValue) {
+    return _shareDataManager.setSharedData(strKey, strValue);
   }
 
   getSharedData(String strKey) {
     return _shareDataManager.getSharedData(strKey);
   }
 
-  deleteSharedData(String strKey) {
-    _shareDataManager.deleteSharedData(strKey);
+  bool deleteSharedData(String strKey) {
+    return _shareDataManager.deleteSharedData(strKey);
   }
 
-  saveData(String strKey, String strData) {
-    _spManager.saveString(strKey, strData);
+  Future<bool> saveData(String strKey, String strData) {
+    return _spManager.saveString(strKey, strData);
   }
 
   loadData(String strKey) {
     return _spManager.getString(strKey);
   }
 
-  deleteData(String strKey) {
-    _spManager.deleteString(strKey);
+  Future<bool> deleteData(String strKey) {
+    return _spManager.deleteString(strKey);
   }
 
   info(String message) {

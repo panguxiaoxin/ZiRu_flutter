@@ -3,6 +3,7 @@ import 'package:zirudemo/clientengine/form/ZiRuWebForm.dart';
 
 import 'package:zirudemo/page/IndexPage.dart';
 import 'package:zirudemo/page/ListPage.dart';
+import 'package:zirudemo/page/screen.dart';
 
 import 'clientengine/ClientEngine.dart';
 
@@ -17,6 +18,9 @@ Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
   var client = ClientEngine();
   await client.init();
+
+  
+
 }
 
 class MyApp extends StatelessWidget {
@@ -38,6 +42,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        '/screen1': (context) => Screen1(),
+        '/screen2': (context) => Screen2(),
+        '/screen3': (context) => Screen3(),
+      }
     );
   }
 }

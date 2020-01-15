@@ -12,26 +12,47 @@ class WebEngine {
     ClientEngine clientEngine = ClientEngine();
     var map = jsonDecode(data);
     String method = map["method"];
-    var params = map["params"];
-    if (method == "saveData") {
-      clientEngine.saveData(params["key"], params["value"]);
-    } else if (method == "setShareData") {
-      clientEngine.setSharedData(params["key"], params["value"]);
-    } else if (method == "loadData") {
-      var callback = params["callback"];
-      var result = clientEngine.loadData(params["key"]);
-      String jsdata = callback + "('" + result + "');";
-      controller.evaluateJavascript(jsdata);
-    } else if (method == "getshareData") {
-      var callback = params["callback"];
-      var result = clientEngine.getSharedData(params["key"]);
-      String jsdata = callback + "(" + result + ");";
-      controller.evaluateJavascript(jsdata);
-    } else if (method == "openform") {
+
+    Map<String, dynamic> params = map["params"];
+
+    if (method == "openform") {
       clientEngine.openform(context, params["url"], params["strTitle"],
           params["strData"], params["nOpenMode"], params["nAnimation"]);
     } else if (method == "back") {
       clientEngine.back(context, params["nAnimation"]);
+    } else if (method == "raiseTrans") {
+      // clientEngine.raiseHttpGet(params["strUrl"]).then((result){
+      //   controller.evaluateJavascript(javascriptString)
+      // });
+
+    } else if (method == "raiseHttpGet") {
+      final strCallbackFunction = params['strCallbackFunction'];
+      final strUrl = params['strUrl'];
+      final strAttachData = params['strAttachData'];
+
+      clientEngine.raiseHttpGet(strUrl).then((result) {
+        var resultString =
+            "'$strCallbackFunction','$strUrl','200','$result','$strAttachData'";
+        try {
+          controller.evaluateJavascript("onHttpResult($resultString)");
+        } catch (e) {}
+      });
+    } else if (method == "raiseHttpPost") {
+      final strCallbackFunction = params['strCallbackFunction'];
+      final strUrl = params['strUrl'];
+      final strContentType = params['strContentType'];
+      final strData = params['strData'];
+      final strAttachData = params['strAttachData'];
+
+      clientEngine
+          .raiseHttpPost(strUrl, strContentType, strData)
+          .then((result) {
+        var resultString =
+            "'$strCallbackFunction','$strUrl','200','$result','$strAttachData'";
+        try {
+          controller.evaluateJavascript("onHttpResult($resultString)");
+        } catch (e) {}
+      });
     }
   }
 }

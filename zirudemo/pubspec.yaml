@@ -32,6 +32,8 @@ dependencies:
   #获取设备信息
   device_info: ^0.4.1+4
 
+  dio: ^3.0.8
+
   # webview_flutter:
   #   path: plugins/webview_flutter
 

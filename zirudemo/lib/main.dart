@@ -41,11 +41,23 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
-      routes: {
-        '/screen1': (context) => Screen1(),
-        '/screen2': (context) => Screen2(),
-        '/screen3': (context) => Screen3(),
-      }
+      // routes: {
+      //   '/screen1': (context) => Screen1(),
+      //   '/screen2': (context) => Screen2(),
+      //   '/screen3': (context) => Screen3(),
+      //   '/screen4': (context) => Screen4(),
+      // },
+      onGenerateRoute: (RouteSettings settings){
+        return MaterialPageRoute(builder:(context){
+          String routeName = settings.name;
+          var arguments = settings.arguments;
+          print(routeName);
+          var route = Screen1();
+          ClientEngine().viewControllers.add({"routeName":route});
+          
+          return route;
+        });
+      },
     );
   }
 }
@@ -121,11 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               child: Text("webView"),
-              onPressed: () => {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return IndexPage();
-                }))
-              },
+              onPressed:() => Navigator.pushNamed(context, "screen1"),
             ),
             Text(
               '$_counter',

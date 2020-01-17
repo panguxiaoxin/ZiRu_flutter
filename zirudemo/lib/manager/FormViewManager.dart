@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zirudemo/clientengine/form/ZiRuWebForm.dart';
@@ -8,6 +10,7 @@ class FormViewManager {
   openform(BuildContext context, String strOrginUrl, String strTitle,
       String strData, int nOpenMode, int nAnimation) {
     if (strOrginUrl.startsWith("form")) {
+      handFormMode(strOrginUrl, context, nOpenMode, nAnimation);
     } else {
       String strUrl = ZRConstants.zipPath + strOrginUrl;
       ZiRuWebForm form = ZiRuWebForm(
@@ -17,11 +20,32 @@ class FormViewManager {
         route = handAminatin(form, nAnimation);
       }
 
-      handMode(strUrl, context, nOpenMode, route);
+      handWebMode(strUrl, context, nOpenMode, route);
     }
   }
 
-  handMode(String url, BuildContext context, int nOpenMode, Route route) {
+  handFormMode(
+      String url, BuildContext context, int nOpenMode, int nAnimation) {
+    if (nOpenMode == 0) {
+      Navigator.pushNamed(context, url,
+          arguments: {"form": url, "nAnimation": nAnimation});
+    } else if (nOpenMode == 1) {
+      Navigator.pushReplacementNamed(context, url,
+          arguments: {"form": url, "nAnimation": nAnimation});
+    } else if (nOpenMode == 2) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, url, (currentroute) => currentroute == null,
+          arguments: {"form": url});
+    } else if (nOpenMode == 3) {
+      Navigator.popUntil(context, (currentroute) {
+        Map data = currentroute.settings.arguments;
+        String currentUrl = data["form"];
+        return currentUrl == url;
+      });
+    }
+  }
+
+  handWebMode(String url, BuildContext context, int nOpenMode, Route route) {
     if (nOpenMode == 0) {
       Navigator.push(context, route);
     } else if (nOpenMode == 1) {
@@ -31,7 +55,7 @@ class FormViewManager {
           context, route, (currentroute) => currentroute == null);
     } else if (nOpenMode == 3) {
       Navigator.popUntil(context, (currentroute) {
-        Map data = Map.from(currentroute.settings.arguments);
+        Map data = currentroute.settings.arguments;
         String currentUrl = data["form"];
         return currentUrl == url;
       });
@@ -62,7 +86,7 @@ class FormViewManager {
             child: childForm,
           );
         },
-        settings: RouteSettings(arguments: {"form", childForm.strUrl}));
+        settings: RouteSettings(arguments: {"form": childForm.strUrl}));
   }
 
   back(BuildContext context, int nAnimation) {

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src="ClientEngine.js"></script>
+</head>
+
+<body>
+	<div style="height: 100px;width: 300px; font-size: 30px; background: #F3B120;">
+		测试
+	</div>
+	<div onclick="saveData();" style="height: 100px;width: 300px; font-size: 30px;background: #FC641C;">
+		saveData
+	</div>
+	<div onclick="loadData();" style="height: 100px;width: 300px; font-size: 30px;background: #F3B120;" id="load">
+		loadData
+	</div>
+	<div onclick="setShareData();" style="height: 100px;width: 300px; font-size: 30px;background: #FC641C;">
+		setShareData
+	</div>
+	<div id="share" onclick="getShareData();" style="height: 100px;width: 300px; font-size: 30px;background: #F3B120;">
+		getShareData
+	</div>
+	</div>
+	<div onclick="openform();" style="height: 100px;width: 300px; font-size: 30px;background: #F3B120;">
+		openform
+	</div>
+	<div onclick="back();" style="height: 100px;width: 300px; font-size: 30px;background: #F3B120;">
+		back();
+	</div>
+
+</body>
+<script>
+	function back() {
+		clientEngine.back(2);
+	}
+
+	function openform() {
+		clientEngine.openForm("first.html", "first", 0, "", 1);
+	}
+
+	function setShareData() {
+		var result = clientEngine.setShareData("age", "我11岁了");
+		if ("1" == result) {
+			clientEngine.info("setShareData保存成功");
+		} else {
+			clientEngine.info("setShareData保存失败");
+		}
+	}
+	function getShareData() {
+		var data = clientEngine.getShareData("age");
+		document.getElementById("share").innerText = "shareData=" + data;
+	}
+
+
+	var saveData = function () {
+
+		var result = clientEngine.saveData("name", "我是小明");
+		if ("1" == result) {
+			clientEngine.info("saveData保存成功");
+		} else {
+			clientEngine.info("saveData保存失败");
+		}
+
+	}
+
+	function loadData() {
+		var data = clientEngine.loadData("name");
+		document.getElementById("load").innerText = "loadData=" + data;
+	}
+
+	function onClientBackPressed() {
+		clientEngine.back(2);
+
+	}
+
+</script>
+
+</html>

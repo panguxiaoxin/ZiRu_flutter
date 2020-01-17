@@ -53,6 +53,10 @@ class WebEngine {
           controller.evaluateJavascript("onHttpResult($resultString)");
         } catch (e) {}
       });
+    } else if (method == "log") {
+      print(params['value']);
+    } else if (method == "info") {
+      clientEngine.info(params['message']);
     }
   }
 }

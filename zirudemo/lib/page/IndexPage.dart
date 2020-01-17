@@ -53,7 +53,8 @@ class IndexPage extends StatelessWidget {
           ),
           RaisedButton(
             onPressed: () {
-              clientEngine.openform(context, "me.html", "1", "0", 0, 1);
+              ClientEngine()
+                  .openform(context, "form_screen1", "", "strData", 0, 1);
             },
             child: Text("openform"),
           )

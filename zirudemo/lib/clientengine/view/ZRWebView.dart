@@ -23,7 +23,7 @@ class ZRState extends State<ZRWebView> {
 
   JavascriptChannel _engineJavascriptChannel(BuildContext context) {
     return JavascriptChannel(
-        name: 'clientEngine',
+        name: 'clientJsEngine',
         onMessageReceived: (JavascriptMessage message) {
           String data = message.message;
           WebEngine.handMessage(context, _controller, data);
@@ -31,36 +31,55 @@ class ZRState extends State<ZRWebView> {
   }
 
   callbackJs(String javascriptString) {
-    _controller.evaluateJavascript(javascriptString);
+    if (_controller != null) {
+      _controller.evaluateJavascript(javascriptString);
+    }
+  }
+
+  bool isInit = false;
+
+  WebView getWebView() {
+    if (widget.webView == null) {
+      widget.webView = WebView(
+        initialUrl: "file://" + widget.strUrl,
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (WebViewController webViewController) {
+          _controller = webViewController;
+        },
+        navigationDelegate: (NavigationRequest request) {
+          print(' navigation to $request');
+          return NavigationDecision.navigate;
+        },
+        debuggingEnabled: true,
+        javascriptChannels: <JavascriptChannel>[
+          _engineJavascriptChannel(context),
+        ].toSet(),
+        onPageStarted: (String url) {
+          print('Page started loading: $url');
+        },
+        onPageFinished: (String url) {
+          if (!isInit) {
+            callbackJs("clientEngine.onClientFormLoaded();");
+            callbackJs("clientEngine.onClientFormFocused();");
+            isInit = true;
+          }
+
+          print('Page finished loading: $url');
+          if (widget.listener != null) {
+            widget.listener.callBack(widget);
+            widget.listener = null;
+          }
+        },
+      );
+    }
+    ;
+    return widget.webView;
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return WebView(
-      initialUrl: "file://" + widget.strUrl,
-      javascriptMode: JavascriptMode.unrestricted,
-      onWebViewCreated: (WebViewController webViewController) {
-        _controller = webViewController;
-      },
-      navigationDelegate: (NavigationRequest request) {
-        print(' navigation to $request');
-        return NavigationDecision.navigate;
-      },
-      debuggingEnabled: true,
-      javascriptChannels: <JavascriptChannel>[
-        _engineJavascriptChannel(context),
-      ].toSet(),
-      onPageStarted: (String url) {
-        print('Page started loading: $url');
-      },
-      onPageFinished: (String url) {
-        print('Page finished loading: $url');
-        if (widget.listener != null) {
-          widget.listener.callBack(widget);
-          widget.listener = null;
-        }
-      },
-    );
+
+    return getWebView();
   }
 }

@@ -79,7 +79,35 @@ class ZRState extends State<ZRWebView> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+<<<<<<< HEAD
 
     return getWebView();
+=======
+    return WebView(
+      initialUrl: "file://" + widget.strUrl,
+      javascriptMode: JavascriptMode.unrestricted,
+      onWebViewCreated: (WebViewController webViewController) {
+        _controller = webViewController;
+      },
+      navigationDelegate: (NavigationRequest request) {
+        // print(' navigation to $request');
+        return NavigationDecision.navigate;
+      },
+      debuggingEnabled: true,
+      javascriptChannels: <JavascriptChannel>[
+        _engineJavascriptChannel(context),
+      ].toSet(),
+      onPageStarted: (String url) {
+        // print('Page started loading: $url');
+      },
+      onPageFinished: (String url) {
+        // print('Page finished loading: $url');
+        if (widget.listener != null) {
+          widget.listener.callBack(widget);
+          widget.listener = null;
+        }
+      },
+    );
+>>>>>>> 38719b847054488ab06a75acbe8d3881a44822d0
   }
 }

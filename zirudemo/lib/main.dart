@@ -118,11 +118,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               child: Text("webView"),
-              onPressed: () => {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return IndexPage();
-                }))
-              },
+              onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context){
+                return IndexPage();
+              })),
             ),
             Text(
               '$_counter',
